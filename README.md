@@ -1,0 +1,2 @@
+# zurihack
+Zurich Hack Challenge
