@@ -3,6 +3,9 @@ import os
 import sys
 
 import streamlit as st
+from hack_zurich_app import file_utils
+from hack_zurich_app.agents.support_answer import SupportAnswer
+from hack_zurich_app.agents.support_center import SupportCenter
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(current_dir)
@@ -10,12 +13,6 @@ parent_dir = os.path.dirname(parent_dir)
 
 if parent_dir not in sys.path:
     sys.path.append(parent_dir)
-
-
-from hack_zurich_app import file_utils
-from hack_zurich_app.agents.support_answer import SupportAnswer
-from hack_zurich_app.agents.support_center import SupportCenter
-
 
 zurich_avatar = f"{file_utils.data_dir()}/zurich-logo.png"
 
@@ -28,8 +25,8 @@ def secrets_to_env_var():
 
 
 @st.cache_resource
-def load_support_center():
-    print("Initializing policies QA chain...")
+def init():
+    print("Initializing SupportCenter...")
     return SupportCenter()
 
 
@@ -63,7 +60,7 @@ def display_pdf(document_path):
 
 
 def refresh():
-    support_center = load_support_center()
+    support_center = init()
 
     st.title("Your personal agent")
     st.caption("We got you covered - Making insurance easy")

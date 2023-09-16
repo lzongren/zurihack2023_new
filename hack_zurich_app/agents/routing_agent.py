@@ -6,7 +6,7 @@ from hack_zurich_app.rag import llm_provider
 
 
 class QueryType(Enum):
-    CLAIM = auto()
+    COVERAGE = auto()
     POLICY_INFO = auto()
     UNKNOWN = auto()
 
@@ -21,7 +21,7 @@ class RoutingAgent:
 
     def determine_query_type(self, query: str) -> QueryType:
         if self._is_coverage_query(query):
-            return QueryType.CLAIM
+            return QueryType.COVERAGE
         elif self._is_policy_info_query(query):
             return QueryType.POLICY_INFO
         else:

@@ -55,7 +55,7 @@ user_policies = {
 }
 
 
-class ClaimAgent():
+class CoverageAgent():
     def __init__(self) -> None:
         logger.info("Creating coverage specialist instance")
         logger.info("Setting up coverage specialist LLM instance")
@@ -183,7 +183,7 @@ class ClaimAgent():
 
 def main():
     logger.info("Initializing coverage specialist")
-    specialist = ClaimAgent()
+    specialist = CoverageAgent()
 
 
 if __name__ == '__main__':
