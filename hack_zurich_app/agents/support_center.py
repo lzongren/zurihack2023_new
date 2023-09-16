@@ -13,12 +13,13 @@ class SupportCenter:
 
     def ask(self, query: str) -> SupportAnswer:
         query_type = self.routing_agent.determine_query_type(query)
+
         if query_type == QueryType.POLICY_INFO:
             return self.policy_info_agent.ask(query)
         elif query_type == QueryType.CLAIM:
             return self.claim_agent.ask(query)
         else:
-            assert False  # TODO
+            return SupportAnswer("This type of query is not supported yet", None)
 
 
 if __name__ == "__main__":

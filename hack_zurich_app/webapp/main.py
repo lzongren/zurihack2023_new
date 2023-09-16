@@ -44,7 +44,7 @@ def build_message_from_support_answer(answer: SupportAnswer):
 
 def print_message(msg):
     st.chat_message(msg["role"], avatar=msg["avatar"]).write(msg["content"])
-    if "document_path" in msg:
+    if "document_path" in msg and msg["document_path"]:
         display_pdf(msg["document_path"])
 
 
