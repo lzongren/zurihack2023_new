@@ -1,4 +1,5 @@
 import functools
+import logging
 
 from langchain import FAISS
 from langchain.document_loaders import PyPDFDirectoryLoader
@@ -8,6 +9,8 @@ from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import VectorStore
 
 from hack_zurich_app import data_catalog
+
+logger = logging.getLogger(__file__)
 
 
 def create_faiss_db(loader: BaseLoader) -> VectorStore:
@@ -24,6 +27,7 @@ def create_faiss_db(loader: BaseLoader) -> VectorStore:
 
 @functools.lru_cache(maxsize=1)
 def create_policies_db():
+    logger.info("Initializing policies vectors db...")
     loader = PyPDFDirectoryLoader(data_catalog.polices())
 
     return create_faiss_db(loader)
