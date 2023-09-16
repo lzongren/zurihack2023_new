@@ -1,13 +1,7 @@
 from hack_zurich_app.agents.claim_agent import ClaimAgent
 from hack_zurich_app.agents.policy_info_agent import PolicyInfoAgent
 from hack_zurich_app.agents.routing_agent import RoutingAgent, QueryType
-
-
-# TODO refactor the data structure to return -> SupportAnswer
-class SupportAnswer:
-    def __init__(self, answer: str, document_path: str):
-        self.answer = answer
-        self.document_path = document_path
+from hack_zurich_app.agents.support_answer import SupportAnswer
 
 
 class SupportCenter:
@@ -17,7 +11,7 @@ class SupportCenter:
         self.policy_info_agent = PolicyInfoAgent()
         self.claim_agent = ClaimAgent()
 
-    def ask(self, query: str):
+    def ask(self, query: str) -> SupportAnswer:
         query_type = self.routing_agent.determine_query_type(query)
         if query_type == QueryType.POLICY_INFO:
             return self.policy_info_agent.ask(query)

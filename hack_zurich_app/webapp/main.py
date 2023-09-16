@@ -3,8 +3,8 @@ import base64
 import streamlit as st
 
 from hack_zurich_app import file_utils
+from hack_zurich_app.agents.support_answer import SupportAnswer
 from hack_zurich_app.agents.support_center import SupportCenter
-from hack_zurich_app.rag.chain import policies_qa_chain
 
 zurich_avatar = f"{file_utils.data_dir()}/zurich-logo.png"
 
@@ -15,15 +15,13 @@ def load_support_center():
     return SupportCenter()
 
 
-def build_message_from_output(chain_output):
-    result = chain_output["result"]
-
-    document_used = chain_output["source_documents"][0].metadata
-    document_path = document_used['source']
-    document_name = document_path.split("/")[-1]
-    result += f"\n\n See {document_name} page {document_used['page']}."
-
-    return {"role": "assistant", "avatar": zurich_avatar, "content": result, "document_path": document_path}
+def build_message_from_support_answer(answer: SupportAnswer):
+    return {
+        "role": "assistant",
+        "avatar": zurich_avatar,
+        "content": answer.answer,
+        "document_path": answer.document_path
+    }
 
 
 def print_message(msg):
@@ -61,9 +59,9 @@ def refresh():
         st.session_state.messages.append({"role": "user", "avatar": None, "content": prompt})
         st.chat_message("user").write(prompt)
 
-        chain_output = support_center.ask(prompt)
+        support_answer = support_center.ask(prompt)
 
-        msg = build_message_from_output(chain_output)
+        msg = build_message_from_support_answer(support_answer)
         st.session_state.messages.append(msg)
 
         print_message(msg)
