@@ -9,6 +9,8 @@ PyCharm can setup `pipenv` automatically https://www.jetbrains.com/help/pycharm/
 ## Running streamlit
 Use `configurations/bins/run_webapp.sh`
 
+Alternative with PyCharm: create a Run Configuration using `webapp/main.py` and the interpreter option `-m streamlit run`
+
 ### Python Tooling
 
 * Black: `pip3 install black`

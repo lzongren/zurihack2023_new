@@ -6,4 +6,6 @@ project_root_dir="$(dirname "$(dirname "$current_dir")")"
 
 webapp_dir=$project_root_dir/hack_zurich_app/webapp
 
-cd $webapp_dir && pipenv run streamlit run main.py
+export PYTHONPATH="$project_root_dir"
+
+cd "$webapp_dir" && pipenv run streamlit run main.py

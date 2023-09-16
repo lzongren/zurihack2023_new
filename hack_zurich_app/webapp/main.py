@@ -1,6 +1,8 @@
 import streamlit as st
 
-zurich_avatar = "./zurich-logo.png"
+from hack_zurich_app import file_utils
+
+zurich_avatar = f"{file_utils.data_dir()}/zurich-logo.png"
 
 st.title("Your personal agent")
 st.caption("We got you covered - Making insurance easy")
