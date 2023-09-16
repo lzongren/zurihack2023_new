@@ -20,7 +20,7 @@ def build_message_from_output(chain_output):
     document_used = chain_output["source_documents"][0].metadata
     document_path = document_used['source']
     document_name = document_path.split("/")[-1]
-    result += f"\n See {document_name} page {document_used['page']}."
+    result += f"\n\n See {document_name} page {document_used['page']}."
 
     return {"role": "assistant", "avatar": zurich_avatar, "content": result, "document_path": document_path}
 
@@ -31,14 +31,16 @@ def print_message(msg):
         display_pdf(msg['document_path'])
 
 
-def display_pdf(file):
-    with open(file, "rb") as f:
+def display_pdf(document_path):
+    with open(document_path, "rb") as f:
         base64_pdf = base64.b64encode(f.read()).decode('utf-8')
 
     pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" ' \
                   f'width="700" height="1000" type="application/pdf"></iframe>'
 
-    st.markdown(pdf_display, unsafe_allow_html=True)
+    document_name = document_path.split("/")[-1]
+    with st.expander(document_name):
+        st.markdown(pdf_display, unsafe_allow_html=True)
 
 
 def refresh():
