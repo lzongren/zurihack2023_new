@@ -12,6 +12,7 @@ faiss-cpu = "*"
 openai = "*"
 sagemaker = ">=2.175.0"
 watchdog = "*"
+jupyterlab = "*"
 
 [dev-packages]
 
