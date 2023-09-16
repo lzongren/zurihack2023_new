@@ -5,6 +5,11 @@ name = "pypi"
 
 [packages]
 streamlit = "*"
+langchain = "*"
+pypdf = "*"
+sentence-transformers = "*"
+faiss-cpu = "*"
+openai = "*"
 
 [dev-packages]
 
