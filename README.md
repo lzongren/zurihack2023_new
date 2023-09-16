@@ -1,6 +1,19 @@
 # zurihack
 
-Zurich Hack Challenge
+## Architecture
+
+### (Offline) Insurance Knowledge Graph Extraction
+![image](./readme_diagrams/insurance_graph_ontology.png)
+
+#### Example
+![image](./readme_diagrams/insurance_graph_example.png)
+
+
+### RAG-based Policy Assistant
+
+### Intent Detector
+
+### Online Claim Specialist
 
 ## Setup
 
