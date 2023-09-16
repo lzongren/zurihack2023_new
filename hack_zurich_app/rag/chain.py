@@ -10,6 +10,7 @@ def retrieval_qa_chain(llm, vector_db):
         llm=llm,
         chain_type="stuff",
         retriever=vector_db.as_retriever(),
+        return_source_documents=True
     )
 
     return qa
@@ -31,5 +32,5 @@ if __name__ == "__main__":
 
     while True:
         query = input(f"Enter the query [default:'{default_query}']") or default_query
-        result = qa_chain.run(query)
+        result = qa_chain(query)
         print(result)
