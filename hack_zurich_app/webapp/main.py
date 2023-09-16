@@ -3,15 +3,16 @@ import base64
 import streamlit as st
 
 from hack_zurich_app import file_utils
+from hack_zurich_app.agents.support_center import SupportCenter
 from hack_zurich_app.rag.chain import policies_qa_chain
 
 zurich_avatar = f"{file_utils.data_dir()}/zurich-logo.png"
 
 
 @st.cache_resource
-def load_qa_chain():
+def load_support_center():
     print("Initializing policies QA chain...")
-    return policies_qa_chain()
+    return SupportCenter()
 
 
 def build_message_from_output(chain_output):
@@ -44,7 +45,7 @@ def display_pdf(document_path):
 
 
 def refresh():
-    qa_chain = load_qa_chain()
+    support_center = load_support_center()
 
     st.title("Your personal agent")
     st.caption("We got you covered - Making insurance easy")
@@ -60,7 +61,7 @@ def refresh():
         st.session_state.messages.append({"role": "user", "avatar": None, "content": prompt})
         st.chat_message("user").write(prompt)
 
-        chain_output = qa_chain(prompt)
+        chain_output = support_center.ask(prompt)
 
         msg = build_message_from_output(chain_output)
         st.session_state.messages.append(msg)
