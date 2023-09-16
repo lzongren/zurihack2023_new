@@ -13,6 +13,14 @@ from hack_zurich_app import data_catalog
 logger = logging.getLogger(__file__)
 
 
+def create_docs_chunks(loader: BaseLoader) -> VectorStore:
+    text_splitter = CharacterTextSplitter(chunk_size=1500, separator="\n")
+    docs = loader.load()
+    chunks = text_splitter.split_documents(docs)
+
+    return chunks
+
+
 def create_faiss_db(loader: BaseLoader) -> VectorStore:
     text_splitter = CharacterTextSplitter(chunk_size=1500, separator="\n")
     docs = loader.load()
@@ -20,8 +28,7 @@ def create_faiss_db(loader: BaseLoader) -> VectorStore:
 
     # Retrieve embedding function from code env resources
     embeddings = HuggingFaceEmbeddings()
-    db = FAISS.from_documents(chunks, embeddings)
-
+    db = FAISS.from_documents(docs, embeddings)
     return db
 
 
@@ -31,6 +38,14 @@ def create_policies_db():
     loader = PyPDFDirectoryLoader(data_catalog.polices())
 
     return create_faiss_db(loader)
+
+
+@functools.lru_cache(maxsize=1)
+def get_policies_docs():
+    logger.info("Initializing policies vectors db...")
+    loader = PyPDFDirectoryLoader(data_catalog.polices())
+
+    return create_docs_chunks(loader)
 
 
 if __name__ == "__main__":

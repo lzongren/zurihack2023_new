@@ -13,6 +13,7 @@ openai = "*"
 sagemaker = ">=2.175.0"
 watchdog = "*"
 jupyterlab = "*"
+cohere = "*"
 
 [dev-packages]
 pytest = "*"
