@@ -103,26 +103,34 @@ class CoverageSpecialist():
   
     def _match_exclusion_rule(self, claim: str, rule: str) -> Optional[bool]:
         # TODO generate prompt and parse the result
-        prompt = f"""
-        You analyze insurance claim against a policy coverage exclusion rule.
-        You answer the question "Does the exclusion RULE exclude cover for the CLAIM?".
-        You answer only with YES, NO, INSUFFICIENT_CONTEXT.
-        RULE: {rule}
-        CLAIM: {claim}
+        prompt_text = """
+        You answer the question "Should the CLAIM be covered given the EXCLUSION RULE?".
+        You answer only with SHOULD_BE, SHOULD_NOT, INSUFFICIENT_CONTEXT.
+        EXCLUSION RULE: '{rule}'
+        CLAIM: '{claim}'
         """
-        logger.info(f"Matching claim against coverage rule: {rule}")
-        result = self.llm.generate
-        if 'YES' in result:
-            return True
-        elif 'NO' in result:
+        # Step 4: Define the Prompt Template
+        prompt = PromptTemplate(
+            input_variables=["rule", "claim"],
+            template=prompt_text,
+        )
+        
+        chain = LLMChain(llm=self.llm, prompt=prompt)
+        
+        logger.info(f"Matching claim against coverage exclusion rule: {rule}")
+        result = chain.run(rule=rule, claim=claim).strip()
+        
+        if 'SHOULD_BE' in result:
             return False
-        return None
+        elif 'SHOULD_NOT' in result:
+            return True
+        else:
+            return None
 
 
 def main():
     logger.info("Initializing coverage specialist")
     specialist = CoverageSpecialist()
-    
 
 
 if __name__ == '__main__':

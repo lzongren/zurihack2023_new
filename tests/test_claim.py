@@ -29,6 +29,32 @@ class TestClaim(unittest.TestCase):
         target = True
         self.assertEqual(result, target)
 
+    def test_match_coverage_exclusion_rule_no(self):
+        specialist = CoverageSpecialist()
+        result = specialist._match_exclusion_rule(
+            rule="10 years old cars or older are not insured in case of accidents",
+            claim="Is my 5 years old car insured?"
+        )
+        target = False
+        self.assertEqual(result, target)
+
+    def test_match_coverage_exclusion_rule_insufficient(self):
+        specialist = CoverageSpecialist()
+        result = specialist._match_exclusion_rule(
+            rule="10 years old cars or older are not insured in case of accidents",
+            claim="Is my car insured?"
+        )
+        self.assertIsNone(result)
+
+    def test_match_coverage_eclusion_rule_yes(self):
+        specialist = CoverageSpecialist()
+        result = specialist._match_exclusion_rule(
+            rule="The insurance does not cover damage due to lack of oil.",
+            claim="My car had no oil and engine got damaged. Is this covered?"
+        )
+        target = True
+        self.assertEqual(result, target)
+
 
 if __name__ == '__main__':
     unittest.main()
