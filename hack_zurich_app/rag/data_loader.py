@@ -20,7 +20,7 @@ def create_faiss_db(loader: BaseLoader) -> VectorStore:
 
     # Retrieve embedding function from code env resources
     embeddings = HuggingFaceEmbeddings()
-    db = FAISS.from_documents(docs, embeddings)
+    db = FAISS.from_documents(chunks, embeddings)
 
     return db
 
