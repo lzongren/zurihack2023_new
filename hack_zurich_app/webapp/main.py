@@ -3,7 +3,7 @@ import streamlit as st
 zurich_avatar = "./zurich-logo.png"
 
 st.title("Your personal agent")
-st.caption("Making insurance easy")
+st.caption("We got you covered - Making insurance easy")
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "avatar": zurich_avatar, "content": "How can I help you?"}]

@@ -24,7 +24,12 @@ def policies_qa_chain():
 
 
 if __name__ == "__main__":
+    print("Initializing policies QA chain...")
+    qa_chain = policies_qa_chain()
+
+    default_query = "What is house hold insurance?"
+
     while True:
-        query = input()
-        result = policies_qa_chain().run(query)
+        query = input(f"Enter the query [default:'{default_query}']") or default_query
+        result = qa_chain.run(query)
         print(result)

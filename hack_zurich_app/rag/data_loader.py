@@ -34,8 +34,14 @@ def create_policies_db():
 
 
 if __name__ == "__main__":
-    query = "What is house hold insurance"
-    docs = create_policies_db().similarity_search(query)
+    policies_db = create_policies_db()
 
-    for doc in docs:
-        print(doc.page_content)
+    default_query = "What is house hold insurance?"
+
+    while True:
+        query = input(f"Enter the query [default:'{default_query}']") or default_query
+
+        docs = policies_db.similarity_search(query)
+        for doc in docs:
+            print("\n=== Doc ===")
+            print(doc.page_content)
