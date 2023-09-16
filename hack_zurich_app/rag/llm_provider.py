@@ -43,7 +43,7 @@ def llama2_7b_chat_hf_llm():
 def openai_llm():
     assert "OPENAI_API_KEY" in os.environ
 
-    return OpenAI()
+    return OpenAI(temperature=0.0)
 
 
 if __name__ == "__main__":

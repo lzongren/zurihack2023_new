@@ -1,16 +1,15 @@
 import unittest
-from hack_zurich_app.claim import CoverageSpecialist
+from hack_zurich_app.claim import CoverageSpecialist, ClaimResult
 
 
 class TestClaim(unittest.TestCase):
     def test_insufficient_information(self):
         specialist = CoverageSpecialist()
         user_id = "1"
-        claim = """Am I covered for damage to my car by a friend"""
-        specialist.determine_claim(user_id, claim)
-        result = False
-        target = True
-        self.assertEqual(result, target)
+        claim = """As part of accidental damage insurance, am I covered against damage to my tires caused by some vandals?"""
+        _, decision = specialist.determine_claim(user_id, claim)
+        target = ClaimResult.COVERED
+        self.assertEqual(decision, target)
 
     def test_match_coverage_rule_no(self):
         specialist = CoverageSpecialist()
@@ -49,7 +48,7 @@ class TestClaim(unittest.TestCase):
     def test_match_coverage_eclusion_rule_yes(self):
         specialist = CoverageSpecialist()
         result = specialist._match_exclusion_rule(
-            rule="The insurance does not cover damage due to lack of oil.",
+            rule="The insurance does not cover damage due to the car due to the lack of oil.",
             claim="My car had no oil and engine got damaged. Is this covered?"
         )
         target = True
