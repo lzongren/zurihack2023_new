@@ -7,7 +7,12 @@ Zurich Hack Challenge
 PyCharm can setup `pipenv` automatically https://www.jetbrains.com/help/pycharm/pipenv.html#pipenv-requirements
 
 ## Running streamlit
-Use `configurations/bins/run_webapp.sh`
+Run
+```
+cd configurations/bins
+export OPENAI_API_KEY=REPLACE_ME
+./run_webapp.sh
+```
 
 Alternative with PyCharm: create a Run Configuration using `webapp/main.py` and the interpreter option `-m streamlit run`
 
