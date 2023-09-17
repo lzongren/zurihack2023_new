@@ -2,17 +2,18 @@ import base64
 import os
 import sys
 
-import streamlit as st
-from hack_zurich_app import file_utils
-from hack_zurich_app.agents.support_answer import SupportAnswer
-from hack_zurich_app.agents.support_center import SupportCenter
-
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(current_dir)
 parent_dir = os.path.dirname(parent_dir)
 
 if parent_dir not in sys.path:
     sys.path.append(parent_dir)
+
+import streamlit as st
+from hack_zurich_app import file_utils
+from hack_zurich_app.agents.support_answer import SupportAnswer
+from hack_zurich_app.agents.support_center import SupportCenter
+
 
 zurich_avatar = f"{file_utils.data_dir()}/zurich-logo.png"
 
@@ -35,7 +36,7 @@ def build_message_from_support_answer(answer: SupportAnswer):
         "role": "assistant",
         "avatar": zurich_avatar,
         "content": answer.answer,
-        "document_path": answer.document_path
+        "document_path": answer.document_path,
     }
 
 
